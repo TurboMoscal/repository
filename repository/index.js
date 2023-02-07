@@ -18,5 +18,9 @@ require('dotenv').config();
 
 
 const usersRouter = require("./routes/usersRoutes");
-  app.use("/api/users",usersRouter);
+app.use("/api/users",usersRouter);
   
+const cardsRouter = require("./routes/cardsRoutes");
+app.use("/api/cards",cardsRouter);
+
+
