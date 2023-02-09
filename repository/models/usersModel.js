@@ -1,4 +1,4 @@
-/*class User {
+class User {
       constructor(id,name,email,password) {
           this.id = id;
           this.name = name;
@@ -28,8 +28,7 @@
       new User(3,"Bob","bob@mail.pt","god")
   ];
   
-  module.exports = User;*/
-
+  module.exports = User;
 
   const express = require('express');
           const router = express.Router();
@@ -47,3 +46,5 @@
             });
           
           module.exports = router;
+
+          

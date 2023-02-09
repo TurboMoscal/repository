@@ -11,7 +11,7 @@ require('dotenv').config();
       app.use(express.urlencoded({ extended: false }));
       app.use(cookieParser(process.env.COOKIE_SECRET));
       app.use(express.static(path.join(__dirname, 'public')));
-      const port = parseInt(process.env.port || '8080');
+      const port = parseInt(process.env.port || '8081');
       app.listen(port,function() {
         console.log("Server running at http://localhost:"+port);
       });
