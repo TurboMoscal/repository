@@ -87,7 +87,7 @@ const pool = require("../config/database");
                     return { status: 500, result: err };
                 }
             }
-            static async filterByLoreOrDescription(text) {
+          /*  static async filterByLoreOrDescription(text) {
                 try {
                     let result = [];
                     let [dbCards] =
@@ -102,7 +102,33 @@ const pool = require("../config/database");
                     console.log(err);
                     return { status: 500, result: err };
                 }
-            }
+            }*/
+            static async filterByLoreOrDescription(text) {
+                try {
+                    let result = [];
+                    let sql;
+                    let params = [];
+                    if (Array.isArray(text)) {
+                        sql =`Select * from cards where REGEXP_LIKE(crd_description,?) 
+                            or REGEXP_LIKE(crd_lore,?)`;
+                        let regexp = text.join('|'); 
+                        params = [regexp,regexp];
+                    } else {
+                       sql = `Select * from cards where crd_description LIKE ? 
+                              or crd_lore LIKE ?`;
+                       params = ['%'+text+'%','%'+text+'%'];
+                    }
+                    let [dbCards] = await pool.query(sql,params);
+                    for (let dbCard of dbCards) {
+                        result.push(cardFromDB(dbCard));
+                    }
+                    return { status: 200, result: result };
+                } catch (err) {
+                    console.log(err);
+                    return { status: 500, result: err };
+                }
+            } 
+        
             static async edit(newInfo) {
                 try {
                     // Checking if card exist to edit the card
@@ -161,6 +187,7 @@ const pool = require("../config/database");
           
           
           module.exports = Card;
+
 
           
 
